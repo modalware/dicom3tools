@@ -305,3 +305,5 @@ DirectoryRecord="IMAGE"			Name="PrivatePixelMedLegacyConvertedEnhancedMRImageSto
 DirectoryRecord="IMAGE"			Name="PrivatePixelMedLegacyConvertedEnhancedPETImageStorage"	Desc="Private PixelMed Legacy Converted Enhanced PET Image Storage"	Uid="1.3.6.1.4.1.5962.301.3"
 DirectoryRecord="IMAGE"			Name="PrivatePixelMedLegacyFloatingPointImageStorage"			Desc="Private PixelMed Floating Point Image Storage"				Uid="1.3.6.1.4.1.5962.301.9"
 
+DirectoryRecord="WF PRESENTATION"		Name="WaveformPresentationStateStorage"					Desc="Waveform Presentation State Storage"					Uid="1.2.840.10008.5.1.4.1.1.9.100.1"
+DirectoryRecord="WF PRESENTATION"		Name="WaveformAcquisitionPresentationStateStorage"		Desc="Waveform Acquisition Presentation State Storage"		Uid="1.2.840.10008.5.1.4.1.1.9.100.2"

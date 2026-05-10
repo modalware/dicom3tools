@@ -9,7 +9,7 @@ public:
 	InformationEntity getInformationEntity() { return ie; }
 	virtual const char *identify(void) const = 0;
 	virtual void        write(TextOutputStream& stream,AttributeList *list,ElementDictionary *dict) const = 0 ;
-	virtual bool        verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,TextOutputStream& log,ElementDictionary *dict) const = 0;
+	virtual bool        verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,bool allpffgitems,TextOutputStream& log,ElementDictionary *dict) const = 0;
 };
 
 #endif /* __Header_module__ */

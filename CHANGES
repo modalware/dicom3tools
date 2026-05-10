@@ -1,3 +1,37 @@
+250524:	appsrc/dcfile/dciodvfy.cc,dciodvfy.man,libsrc/include/dctool/attrmxls.h,libsrc/src/dctool/attrmxls.cc: Check only first item of Per-Frame Functional Groups Sequence by default, without specific command line option to do them all (000621)
+
+250523:	libsrc/standard/strval/base.tpl: Add 99Visiopharm coding scheme
+
+250523:	libsrc/standard/iodcomp,module,strval/vl.tpl: Add dciodvfy WSI and ANN profile WG26SP2025 to check for WG 26 2025 Spring Connectathon requirements
+
+250523:	libsrc/standard/elmdict/other.tpl: Add observed Google converted WSI private data elements
+
+250523:	libsrc/standard/elmdict/other.tpl: Add observed Agfa private data element not in conformance statement
+
+250523:	libsrc/standard/elmdict/other.tpl: Add observed 3DHISTECH private data elements not in conformance statement
+
+250523:	libsrc/standard/elmdict/other.tpl: Add Leica Aperio WSI private data elements from Conformance Statement for v1.4
+
+250522:	libsrc/src/locale/mesgtext.tpl,appsrc/dcfile/dciodvfy.cc: Check for instance UIDs that use NEMA root but are not standard well-known instances (000620)
+
+250513:	libsrc/src/locale/mesgtext.tpl,appsrc/dcfile/dciodvfy.cc: Check that 99xxx CodingSchemeDesignator is alphanumeric string (000617)
+
+250513:	libsrc/standard/strval/base.tpl: Add 99mrireface coding scheme
+
+250406:	libsrc/standard/elmdict/diconde.tpl: Add DICONDE Ultrasound Waveform Storage SOP Class UID and data elements (ASTM E2663 revision)
+
+250406:	libsrc/standard/elmdict/dicom3.tpl: Add Patient Model Gender Enhancements data elements (Sup 233)
+
+250401:	libsrc/standard/elmdict/other.tpl,strval/base.tpl: Add Pramana WSI private data elements encountered and 99PRAMANA CSD
+
+250225:	libsrc/standard/elmdict/toshiba.tpl: Replicate TOSHIBA_MEC_XA3 private data elements as CANON_MEC_XA3, and add new ones, as encountered (000616)
+
+250225:	libsrc/standard/condn.tpl: Allow optional XA/XRF Modality LUT Module when PixelIntensityRelationship is DISP (000615)
+
+250212:	libsrc/standard/sopcl.tpl,standard/elmdict/dicom3.tpl: Add data elements and UIDs for Waveform Presentation States (Sup 236)
+
+250211:	libsrc/src/locale/mesgtext.tpl: Include SOC in message re. missing SOI or SOC (000614)
+
 250128:	appsrc/acrnema/ancreate.cc,andump.cc,libsrc/include/dctool/attrtypf.h,fltype.h: Fix andump compile error due to infinity now reserved word in C++, by renaming to our_infinity() throughout (may fail on earlier platforms if there really was an infinity() function that was used) (000611), and undo breaking change to andump when adding 64 bit binary VRs (CP 1819) that caused incorrect FD values (000612)
 
 250122:	libsrc/standard/condn.tpl,module/base.tpl,softcopy.tpl,vl.tpl: Clarify location of ICC Profile when Optical Path Sequence present (CP 2414) - updates (000603) changes and addresses old VL IOD inclusion of ICC Profile and Optical Path Modules

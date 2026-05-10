@@ -342,6 +342,10 @@ StringValues="AnnotationCoordinateType" {
 	3D
 }
 
+StringValues="AnnotationCoordinateType2D" {
+	2D
+}
+
 StringValues="AnnotationGroupGenerationType" {
 	AUTOMATIC,
 	SEMIAUTOMATIC,
@@ -365,4 +369,8 @@ StringValues="TilesOverlap" {
 
 StringValues="TilesOverlapNONE" {
 	NONE
+}
+
+StringValues="DimensionOrganizationTypeTILED_FULL" {
+	TILED_FULL
 }

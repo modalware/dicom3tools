@@ -697,6 +697,23 @@ Module="MultiFrameFunctionalGroupsForWholeSlideMicroscopy"
 	Verify="PerFrameFunctionalGroupsSequence" 			Condition="MissingPerFrameFunctionalGroupsSequenceForWholeSlideMicroscopy"	ThenErrorMessage="Required unless DimensionOrganizationType is TILED_FULL"
 ModuleEnd
 
+Module="WG26SP2025WSI"
+	Name="DimensionOrganizationType"					Type="3"	StringEnumValues="DimensionOrganizationTypeTILED_FULL"
+	Name="TotalPixelMatrixFocalPlanes"					Type="1"	BinaryEnumValues="One"
+	Name="ConcatenationUID"								Type="1C"	Condition="Never"
+	Sequence="SpecimenDescriptionSequence"					Type="1"	VM="1-n"
+		Sequence="SpecimenTypeCodeSequence"					Type="1"	VM="1"
+			InvokeMacro="CodeSequenceMacro"					BaselineContextID="8103"
+		SequenceEnd
+		Sequence="SpecimenPreparationSequence"				Type="1"	VM="1-n"
+			Sequence="SpecimenPreparationStepContentItemSequence"	Type="1"	VM="1-n"
+				InvokeMacro="ContentItemMacro"
+			SequenceEnd
+		SequenceEnd
+		InvokeMacro="PrimaryAnatomicStructureMacro" 
+	SequenceEnd
+ModuleEnd
+
 Module="LensometryMeasurementsSeries"
 	Name="Modality"										Type="1"			StringEnumValues="LensometryModality"
 	Sequence="ReferencedPerformedProcedureStepSequence"	Type="1C"	VM="1"	Condition="SeriesNeedReferencedPerformedProcedureStepSequence"
@@ -1588,4 +1605,8 @@ Module="MicroscopyBulkSimpleAnnotations"
 			SequenceEnd
 		SequenceEnd
 	SequenceEnd
+ModuleEnd
+
+Module="WG26SP2025ANN"
+	Name="AnnotationCoordinateType"										Type="1"	StringEnumValues="AnnotationCoordinateType2D"
 ModuleEnd

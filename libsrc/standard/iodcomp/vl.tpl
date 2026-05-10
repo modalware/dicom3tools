@@ -585,6 +585,57 @@ CompositeIOD="VLWholeSlideMicroscopyImage"		Condition="VLWholeSlideMicroscopyIma
 	InformationEntityEnd
 CompositeIODEnd
 
+CompositeIOD="VLWholeSlideMicroscopyImageWG26SP2025"		Condition="VLWholeSlideMicroscopyImageInstance"	Profile="WG26SP2025"
+	InformationEntity="File"
+		Module="FileMetaInformation"						Usage="C"	Condition="NeedModuleFileMetaInformation"
+	InformationEntityEnd
+	InformationEntity="Patient"
+		Module="Patient"									Usage="M"
+		Module="ClinicalTrialSubject"						Usage="U"	Condition="NeedModuleClinicalTrialSubject"
+	InformationEntityEnd	
+	InformationEntity="Study"
+		Module="GeneralStudy"								Usage="M"
+		Module="PatientStudy"								Usage="U"	# no condition ... all attributes type 3
+		Module="ClinicalTrialStudy"							Usage="U"	Condition="NeedModuleClinicalTrialStudy"
+	InformationEntityEnd
+	InformationEntity="Series"
+		Module="GeneralSeries"								Usage="M"
+		Module="ClinicalTrialSeries"						Usage="U"	Condition="NeedModuleClinicalTrialSeries"
+		Module="WholeSlideMicroscopySeries"					Usage="M"
+	InformationEntityEnd
+	InformationEntity="FrameOfReference"
+		Module="FrameOfReference"							Usage="C"	Condition="NeedModuleFrameOfReference"
+	InformationEntityEnd
+	InformationEntity="Equipment"
+		Module="GeneralEquipment"							Usage="M"
+		Module="EnhancedGeneralEquipment"					Usage="M"
+	InformationEntityEnd
+	InformationEntity="Acquisition"
+		Module="GeneralAcquisition"							Usage="M"
+	InformationEntityEnd
+	InformationEntity="MultiResolutionPyramid"
+		Module="MultiResolutionPyramid"						Usage="U"	Condition="NeedModuleMultiResolutionPyramid"
+	InformationEntityEnd
+	InformationEntity="Image"
+		Module="GeneralImage"								Usage="M"
+		Module="GeneralReference"							Usage="U"	Condition="NeedModuleGeneralReference"
+		Module="MicroscopeSlideLayerTileOrganization"		Usage="M"
+		Module="ImagePixel"									Usage="M"
+		Module="AcquisitionContext"							Usage="M"
+		Module="MultiFrameFunctionalGroupsCommon"			Usage="M"
+		Module="MultiFrameFunctionalGroupsForWholeSlideMicroscopy"	Usage="M"
+		Module="MultiFrameDimension"						Usage="M"
+		Module="Specimen"									Usage="M"
+		Module="WholeSlideMicroscopyImage"					Usage="M"
+		Module="OpticalPath"								Usage="M"
+		Module="SlideLabel"									Usage="C"	Condition="NeedModuleSlideLabel"
+		Module="SOPCommon"									Usage="M"
+		Module="CommonInstanceReference"					Usage="M"
+		Module="FrameExtraction"							Usage="C"	Condition="NeedModuleFrameExtraction"
+		Module="WG26SP2025WSI"								Usage="M"
+	InformationEntityEnd
+CompositeIODEnd
+
 CompositeIOD="LensometryMeasurements" Condition="LensometryMeasurementsInstance"
 	InformationEntity="File"
 		Module="FileMetaInformation"						Usage="C"	Condition="NeedModuleFileMetaInformation"
@@ -895,5 +946,40 @@ CompositeIOD="MicroscopyBulkSimpleAnnotations" Condition="MicroscopyBulkSimpleAn
 		Module="Specimen"												Usage="U"	Condition="NeedModuleSpecimen"
 		Module="CommonInstanceReference"								Usage="M"
 		Module="SOPCommon"												Usage="M"
+	InformationEntityEnd
+CompositeIODEnd
+
+CompositeIOD="MicroscopyBulkSimpleAnnotationsWG26SP2025" Condition="MicroscopyBulkSimpleAnnotationsInstance"	Profile="WG26SP2025"
+	InformationEntity="File"
+		Module="FileMetaInformation"									Usage="C"	Condition="NeedModuleFileMetaInformation"
+	InformationEntityEnd
+	InformationEntity="Patient"
+		Module="Patient"												Usage="M"
+		Module="ClinicalTrialSubject"									Usage="U"	Condition="NeedModuleClinicalTrialSubject"
+	InformationEntityEnd
+	InformationEntity="Study"
+		Module="GeneralStudy"											Usage="M"
+		Module="PatientStudy"											Usage="U"	# no condition ... all attributes type 3
+		Module="ClinicalTrialStudy"										Usage="U"	Condition="NeedModuleClinicalTrialStudy"
+	InformationEntityEnd
+	InformationEntity="Series"
+		Module="GeneralSeries"											Usage="M"
+		Module="MicroscopyBulkSimpleAnnotationsSeries"					Usage="M"
+		Module="ClinicalTrialSeries"									Usage="U"	Condition="NeedModuleClinicalTrialSeries"
+	InformationEntityEnd
+	InformationEntity="FrameOfReference"
+		Module="FrameOfReference"										Usage="C"	Condition="AnnotationCoordinateTypeIs3D"
+	InformationEntityEnd
+	InformationEntity="Equipment"
+		Module="GeneralEquipment"										Usage="M"
+		Module="EnhancedGeneralEquipment"								Usage="M"
+	InformationEntityEnd
+	InformationEntity="Annotation"
+		Module="MicroscopyBulkSimpleAnnotations"						Usage="M"
+		Module="ICCProfile"												Usage="U"	Condition="NeedModuleICCProfile"
+		Module="Specimen"												Usage="U"	Condition="NeedModuleSpecimen"
+		Module="CommonInstanceReference"								Usage="M"
+		Module="SOPCommon"												Usage="M"
+		Module="WG26SP2025ANN"											Usage="M"
 	InformationEntityEnd
 CompositeIODEnd

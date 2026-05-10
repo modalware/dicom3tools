@@ -76,7 +76,7 @@ NR==1	{
 	}
 	else if (role == "verify") {
 		print "bool"
-		print macroormodule "_" module "::verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,TextOutputStream& log,ElementDictionary *dict) const"
+		print macroormodule "_" module "::verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,bool allpffgitems,TextOutputStream& log,ElementDictionary *dict) const"
 		print "{"
 		#print "\tconst char *module = \"" module "\";"
 		print "\t(void)module;  // Quiets compiler in case module empty"
@@ -110,7 +110,7 @@ NR==1	{
 		print "\t            " macroormodule "_" module "(AttributeList *list,InformationEntity ie);"
 		print "\tconst char *identify(void) const { return \"" module "\"; }"
 		print "\tvoid        write(TextOutputStream& stream,AttributeList *list,ElementDictionary *dict) const ;"
-		print "\tbool        verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,TextOutputStream& log,ElementDictionary *dict) const;"
+		print "\tbool        verify(AttributeList *list,AttributeList *parentlist,AttributeList *rootlist,bool verbose,bool newformat,bool allpffgitems,TextOutputStream& log,ElementDictionary *dict) const;"
 		print "};"
 		print ""
 	}
@@ -288,6 +288,13 @@ NR==1	{
 			print "\t\tint n;"
 			indentcode(sequencenestingdepth)
 			print "\t\tif ((n="sequence "->getLists(&array)) > 0) {"
+			if (role == "verify") {
+				indentcode(sequencenestingdepth)
+				#print "\t\t\tn = (allpffgitems || " sequence "->getTag() != TagFromName(PerFrameFunctionalGroupsSequence)) ? n : 1;"
+				if (sequence == "PerFrameFunctionalGroupsSequence") {
+					print "\t\t\tif (!allpffgitems) n=1;"
+				}
+			}
 			indentcode(sequencenestingdepth)
 			print "\t\t\tint i; for (i=0; i<n; ++i) {"
 			if (role == "verify") {
@@ -772,7 +779,7 @@ NR==1	{
 				print "\tif (Condition_" condition "(list,parentlist,rootlist)) {"
 			}
 			indentcode(sequencenestingdepth)
-			print "\tif (!Macro_" invokedmacro "(list,ie).verify(list,parentlist,rootlist,verbose,newformat,log,dict)) success=false;"
+			print "\tif (!Macro_" invokedmacro "(list,ie).verify(list,parentlist,rootlist,verbose,newformat,allpffgitems,log,dict)) success=false;"
 			if (length(condition) > 0) {
 				indentcode(sequencenestingdepth)
 				print "\t}"

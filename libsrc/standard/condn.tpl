@@ -1370,8 +1370,16 @@ Condition="NeedModuleXRayTable"
 ConditionEnd
 
 Condition="XRayNeedModuleModalityLUT"
-	Element="PixelIntensityRelationship"	StringValue="LOG"
-	# Optional if Pixel Intensity Relationship is DISP
+	Element="PixelIntensityRelationship"		StringValue="LOG"
+	(
+		Element="PixelIntensityRelationship"	StringValue="DISP"
+		(
+			Element="RescaleSlope"				ElementPresent=""
+			Element="RescaleIntercept"			ElementPresent=""
+			Element="RescaleType"				ElementPresent=""
+			Element="ModalityLUTSequence"		ElementPresent=""
+		) Operator="And"
+	) Operator="Or"
 ConditionEnd
 
 Condition="NeedModuleBiplaneOverlay"

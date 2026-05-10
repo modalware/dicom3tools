@@ -134,10 +134,10 @@ public:
 	DicomOutputStream& write(DicomOutputStream& stream);
 	TextOutputStream&  write(TextOutputStream& stream,bool verbose=false,bool showUsedAndIE=false);
 
-	bool validateVR(bool verbose,bool newformat,TextOutputStream &log);
-	bool validateRetired(bool verbose,bool newformat,TextOutputStream &log);
-	bool validateUsed(bool verbose,bool newformat,TextOutputStream &log);
-	bool validatePrivate(bool verbose,bool newformat,TextOutputStream &log);
+	bool validateVR(bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log);
+	bool validateRetired(bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log);
+	bool validateUsed(bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log);
+	bool validatePrivate(bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log);
 
 	flag_types set(flag_types f)	{ return flags=flag_types(flags|f); }
 	flag_types reset(flag_types f)	{ return flags=flag_types(flags&~f); }

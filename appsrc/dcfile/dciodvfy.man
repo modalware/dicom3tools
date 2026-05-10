@@ -1,4 +1,4 @@
-.TH DCIODVFY 1 "2 August 2021" "DICOM PS3" "DICOM PS3 - Validate DICOM objects"
+.TH DCIODVFY 1 "25 May 2025" "DICOM PS3" "DICOM PS3 - Validate DICOM objects"
 .SH NAME
 dciodvfy \- ACR/NEMA DICOM PS3 ... DICOM PS3 - Validate DICOM objects
 .SH SYNOPSIS
@@ -22,6 +22,9 @@ dciodvfy \- ACR/NEMA DICOM PS3 ... DICOM PS3 - Validate DICOM objects
 ]
 [
 .B \-filename
+]
+[
+.B \-allpffgitems
 ]
 .so man1/optin.so
 .SH DESCRIPTION
@@ -55,6 +58,8 @@ IHEDBT (specializes BreastTomosynthesisImage),
 IHEXDSIManifest (specializes KeyObjectSelectionDocument),
 .TP
 Dental (specializes IntraoralImageForPresentation, DXImageForPresentation and BasicDirectory)
+.TP
+WG26SP2025 (specializes VLWholeSlideMicroscopyImage and MicroscopyBulkSimpleAnnotations)
 .RE
 .TP
 .B \-describe
@@ -83,6 +88,12 @@ Display byte offset from file start and message start, in hexadecimal, and dump 
 .B \-filename
 .RS
 Show the name of the file supplied in the arguments; a hyphen will be reported if no filename was supplied.
+.RE
+.TP
+.B \-allpffgitems
+.RS
+Validate every Item of Per-Frame Functional Groups Sequence, rather than just the first item (default
+is to validate only first Item to avoid duplicative output when same error repeated in every Item)
 .RE
 .SH ENVIRONMENT
 .LP

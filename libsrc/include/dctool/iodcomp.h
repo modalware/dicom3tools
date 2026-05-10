@@ -7,7 +7,7 @@ public:
 	virtual bool		retired(void) const = 0;
 	virtual const char *identify(void) const = 0;
 	virtual void        write(TextOutputStream& stream,AttributeList *list,ElementDictionary *dict) const = 0;
-	virtual bool        verify(AttributeList *list,bool verbose,bool newformat,TextOutputStream& log,ElementDictionary *dict) const = 0;
+	virtual bool        verify(AttributeList *list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream& log,ElementDictionary *dict) const = 0;
 };
 
 CompositeIOD *selectCompositeIOD(AttributeList *list,const char *profile);

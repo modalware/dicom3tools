@@ -134,17 +134,24 @@ WMsgDCF(const char *index,const Attribute *a,int valuenumber) {
 // loopOverListsInSequencesWithLog is copied from libsrc/src/dctool/attrmxls.cc
 
 static bool
-loopOverListsInSequencesWithLog(Attribute *a,bool verbose,bool newformat,TextOutputStream &log,
-		bool (*func)(AttributeList &,bool,bool,TextOutputStream &))
+loopOverListsInSequencesWithLog(Attribute *a,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log,
+		bool (*func)(AttributeList &,bool,bool,bool,TextOutputStream &))
 {
 	bool succeeded=true;
 	if (strcmp(a->getVR(),"SQ") == 0) {
+		Tag tag = a->getTag();
 		AttributeList **al;
 		int n;
 		if ((n=a->getLists(&al)) > 0) {
-			int i;
-			for (i=0; i<n; ++i) {
-				if (!(*func)(*al[i],verbose,newformat,log)) succeeded=false;
+			if (tag == TagFromName(PerFrameFunctionalGroupsSequence) && !allpffgitems) {
+				// just do first item
+				if (!(*func)(*al[0],verbose,newformat,allpffgitems,log)) succeeded=false;
+			}
+			else {
+				int i;
+				for (i=0; i<n; ++i) {
+					if (!(*func)(*al[i],verbose,newformat,allpffgitems,log)) succeeded=false;
+				}
 			}
 			delete [] al;
 		}
@@ -153,17 +160,24 @@ loopOverListsInSequencesWithLog(Attribute *a,bool verbose,bool newformat,TextOut
 }
 
 static bool
-loopOverListsInSequencesWithRootListAndLog(AttributeList &rootlist,Attribute *a,bool verbose,bool newformat,TextOutputStream &log,
-		bool (*func)(AttributeList &,AttributeList &,bool,bool,TextOutputStream &))
+loopOverListsInSequencesWithRootListAndLog(AttributeList &rootlist,Attribute *a,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log,
+		bool (*func)(AttributeList &,AttributeList &,bool,bool,bool,TextOutputStream &))
 {
 	bool succeeded=true;
 	if (strcmp(a->getVR(),"SQ") == 0) {
+		Tag tag = a->getTag();
 		AttributeList **al;
 		int n;
 		if ((n=a->getLists(&al)) > 0) {
-			int i;
-			for (i=0; i<n; ++i) {
-				if (!(*func)(rootlist,*al[i],verbose,newformat,log)) succeeded=false;
+			if (tag == TagFromName(PerFrameFunctionalGroupsSequence) && !allpffgitems) {
+				// just do first item
+				if (!(*func)(rootlist,*al[0],verbose,newformat,allpffgitems,log)) succeeded=false;
+			}
+			else {
+				int i;
+				for (i=0; i<n; ++i) {
+					if (!(*func)(rootlist,*al[i],verbose,newformat,allpffgitems,log)) succeeded=false;
+				}
 			}
 			delete [] al;
 		}
@@ -194,7 +208,7 @@ static bool checkScaledNumericValues(Tag coarseTag,const char *coarseName,Tag fi
 }
 
 static bool
-checkScaledNumericValues(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkScaledNumericValues(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	bool success=true;
 	if (!checkScaledNumericValues(TagFromName(Exposure),"Exposure",TagFromName(ExposureInuAs),"ExposureInuAs",1000.0,list,verbose,newformat,log)) success = false;
 	if (!checkScaledNumericValues(TagFromName(ExposureTime),"ExposureTime",TagFromName(ExposureTimeInuS),"ExposureTimeInuS",1000.0,list,verbose,newformat,log)) success = false;
@@ -204,7 +218,7 @@ checkScaledNumericValues(AttributeList &list,bool verbose,bool newformat,TextOut
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkScaledNumericValues)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkScaledNumericValues)) {
 			success=false;
 		}
 		++listi;
@@ -213,7 +227,7 @@ checkScaledNumericValues(AttributeList &list,bool verbose,bool newformat,TextOut
 }
 
 static bool
-checkPatientOrientationValuesForBiped(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkPatientOrientationValuesForBiped(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //log << "checkPatientOrientationValuesForBiped" << endl;
 	bool success=true;
 	Attribute *aPatientOrientation=list[TagFromName(PatientOrientation)];
@@ -298,7 +312,7 @@ checkPatientOrientationValuesForBiped(AttributeList &list,bool verbose,bool newf
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkPatientOrientationValuesForBiped)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkPatientOrientationValuesForBiped)) {
 			success=false;
 		}
 		++listi;
@@ -307,7 +321,7 @@ checkPatientOrientationValuesForBiped(AttributeList &list,bool verbose,bool newf
 }
 
 static bool
-checkPatientOrientationValuesForQuadruped(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkPatientOrientationValuesForQuadruped(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //log << "checkPatientOrientationValuesForQuadruped" << endl;
 	bool success=true;
 	Attribute *aPatientOrientation=list[TagFromName(PatientOrientation)];
@@ -479,7 +493,7 @@ checkPatientOrientationValuesForQuadruped(AttributeList &list,bool verbose,bool 
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkPatientOrientationValuesForQuadruped)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkPatientOrientationValuesForQuadruped)) {
 			success=false;
 		}
 		++listi;
@@ -488,7 +502,7 @@ checkPatientOrientationValuesForQuadruped(AttributeList &list,bool verbose,bool 
 }
 
 static bool
-checkPatientOrientationValuesForBipedOrQuadruped(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkPatientOrientationValuesForBipedOrQuadruped(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	bool quadruped = false;
 	Attribute *aAnatomicalOrientationType=list[TagFromName(AnatomicalOrientationType)];
 	if (aAnatomicalOrientationType) {
@@ -498,11 +512,11 @@ checkPatientOrientationValuesForBipedOrQuadruped(AttributeList &list,bool verbos
 			quadruped = true;
 		}
 	}
-	return quadruped ? checkPatientOrientationValuesForQuadruped(list,verbose,newformat,log) : checkPatientOrientationValuesForBiped(list,verbose,newformat,log);
+	return quadruped ? checkPatientOrientationValuesForQuadruped(list,verbose,newformat,allpffgitems,log) : checkPatientOrientationValuesForBiped(list,verbose,newformat,allpffgitems,log);
 }
 
 static bool
-checkUIDs(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkUIDs(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	bool success=true;
 	AttributeListIterator listi(list);
 	while (!listi) {
@@ -537,11 +551,76 @@ checkUIDs(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log)
 							}
 							success = false;
 						}
+						else if (strlen(value) >= 13 && strncmp(value,"1.2.840.10008",13) == 0) {
+							Tag tag=a->getTag();
+							if (tag != TagFromName(SOPClassUID)
+							 && tag != TagFromName(AffectedSOPClassUID)
+							 && tag != TagFromName(MediaStorageSOPClassUID)
+							 && tag != TagFromName(OriginalSpecializedSOPClassUID)
+							 && tag != TagFromName(ReferencedRelatedGeneralSOPClassUIDInFile)
+							 && tag != TagFromName(ReferencedSOPClassUID)
+							 && tag != TagFromName(ReferencedSOPClassUIDInFile)
+							 && tag != TagFromName(RelatedGeneralSOPClassUID)
+							 && tag != TagFromName(RequestedSOPClassUID)
+							 && tag != TagFromName(RelatedGeneralSOPClassUID)
+							 && tag != TagFromName(SOPClassesInStudy)
+							 && tag != TagFromName(SOPClassesSupported)
+							 
+							 && tag != TagFromName(TransferSyntaxUID)
+							 && tag != TagFromName(EncryptedContentTransferSyntaxUID)
+							 && tag != TagFromName(MACCalculationTransferSyntaxUID)
+							 && tag != TagFromName(ReferencedTransferSyntaxUIDInFile)
+
+							 && tag != TagFromName(EquipmentFrameOfReferenceUID)
+							 && tag != TagFromName(CodingSchemeUID)
+							 && tag != TagFromName(ContextGroupExtensionCreatorUID)
+							) {
+								if ((tag == TagFromName(SOPInstanceUID)
+								  || tag == TagFromName(MediaStorageSOPInstanceUID)
+								  || tag == TagFromName(ReferencedSOPInstanceUID)
+								  || tag == TagFromName(ReferencedSOPInstanceUIDInFile)
+								 )
+								 &&
+								 (
+								 	// Well-known SOP Instance UIDs
+								     strcmp(value,"1.2.840.10008.1.5.1") != 0	// Hot Iron Color Palette SOP Instance
+								  || strcmp(value,"1.2.840.10008.1.5.2") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.3") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.4") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.5") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.6") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.7") != 0
+								  || strcmp(value,"1.2.840.10008.1.5.8") != 0
+								  || strcmp(value,"1.2.840.10008.1.20.1.1") != 0
+								  || strcmp(value,"1.2.840.10008.1.20.2.1") != 0
+								  || strcmp(value,"1.2.840.10008.1.40.1") != 0
+								  || strcmp(value,"1.2.840.10008.1.42.1") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.1.17") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.1.17.376") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.1.25") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.1.40.1") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.4.1.1.201.1.1") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.4.34.5") != 0
+								  || strcmp(value,"1.2.840.10008.5.1.4.34.5.1") != 0
+								 )
+								) {
+									if (newformat) {
+										log << EMsgDCF(MMsgDC(InvalidUseOfStandardRootForUID),a) << " = <" << value << ">" << endl;
+									}
+									else {
+										log << EMsgDC(InvalidUseOfStandardRootForUID) << " - \"" << value << "\" in ";
+										writeTagNumberAndNameToLog(a,list.getDictionary(),log);
+										log << endl;
+									}
+									success = false;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkUIDs)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkUIDs)) {
 			success=false;
 		}
 		++listi;
@@ -550,7 +629,7 @@ checkUIDs(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log)
 }
 
 static bool
-checkNoEmptyReferencedFileIDComponents(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkNoEmptyReferencedFileIDComponents(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	bool success=true;
 	Attribute *aReferencedFileID=list[TagFromName(ReferencedFileID)];
 	if (aReferencedFileID && aReferencedFileID->isEmptyOrHasAnyEmptyValue()) {
@@ -566,7 +645,7 @@ checkNoEmptyReferencedFileIDComponents(AttributeList &list,bool verbose,bool new
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkNoEmptyReferencedFileIDComponents)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkNoEmptyReferencedFileIDComponents)) {
 			success=false;
 		}
 		++listi;
@@ -575,13 +654,13 @@ checkNoEmptyReferencedFileIDComponents(AttributeList &list,bool verbose,bool new
 }
 
 static bool
-checkNoIllegalOddNumberedGroups(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkNoIllegalOddNumberedGroups(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	bool success=true;
 	AttributeListIterator listi(list);
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkNoIllegalOddNumberedGroups)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkNoIllegalOddNumberedGroups)) {
 			success=false;
 		}
 		Tag tag=a->getTag();
@@ -1028,7 +1107,7 @@ static bool checkOrthogonal(
 }
 
 static bool
-checkOrientationsAreOrthogonal(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log)
+checkOrientationsAreOrthogonal(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log)
 {
 	bool success=true;
 	{
@@ -1050,7 +1129,7 @@ checkOrientationsAreOrthogonal(AttributeList &list,bool verbose,bool newformat,T
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkOrientationsAreOrthogonal)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkOrientationsAreOrthogonal)) {
 			success=false;
 		}
 		++listi;
@@ -1059,7 +1138,7 @@ checkOrientationsAreOrthogonal(AttributeList &list,bool verbose,bool newformat,T
 }
 
 static bool
-checkOrientationsAreUnitVectors(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log)
+checkOrientationsAreUnitVectors(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log)
 {
 	// call for ImageOrientationPatient and ImageOrientation
 	bool success=true;
@@ -1113,7 +1192,7 @@ checkOrientationsAreUnitVectors(AttributeList &list,bool verbose,bool newformat,
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkOrientationsAreUnitVectors)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkOrientationsAreUnitVectors)) {
 			success=false;
 		}
 		++listi;
@@ -1663,7 +1742,7 @@ checkLUTDataValuesMatchSpecifiedRange(AttributeList &list,bool verbose,bool newf
 }
 
 static bool
-checkCodeSequenceItemsAreNotUnknown(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {	// (000589)
+checkCodeSequenceItemsAreNotUnknown(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {	// (000589)
 	//cerr << "checkCodeSequenceItemsAreNotUnknown():" << endl;
 	bool success=true;
 	AttributeListIterator listi(list);
@@ -1750,7 +1829,7 @@ checkCodeSequenceItemsAreNotUnknown(AttributeList &list,bool verbose,bool newfor
 			}
 		}
 		{
-			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCodeSequenceItemsAreNotUnknown)) {
+			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCodeSequenceItemsAreNotUnknown)) {
 				success=false;
 			}
 		}
@@ -1760,7 +1839,7 @@ checkCodeSequenceItemsAreNotUnknown(AttributeList &list,bool verbose,bool newfor
 }
 
 static bool
-checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	//cerr << "checkCodeValuesDoNotContainInappropriateCharacters():" << endl;
 	bool success=true;
 	AttributeListIterator listi(list);
@@ -1796,7 +1875,6 @@ checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verb
 										char *value;
 										if (aCodeValue->getValue(j,value)) {
 											//cerr << "checkCodeValuesDoNotContainInappropriateCharacters(): have CodeValue value [" <<j << "] " << value << endl;
-											Uint32 length=0;
 											const char *ptr=value;
 											char c;
 											while ((c=*ptr++)) {
@@ -1822,9 +1900,29 @@ checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verb
 														<< "> - bad character is '" << c
 														<< "' - coding scheme is <" << vCodingSchemeDesignator
 														<< ">" << endl;
-													//success=false;
+													success=false;
 												}
 											}
+										}
+									}
+								}
+								else if (strncmp(vCodingSchemeDesignator,"99",2) == 0) {
+									// private coding scheme
+									// check is alphanumeric only (000617)
+									const char *ptr=vCodingSchemeDesignator;
+									char c;
+									while ((c=*ptr++)) {
+										if (!isalpha(c) && !isdigit(c)) {
+											if (newformat) {
+												log << WMsgDCF(MMsgDC(PrivateCodingSchemeDesignatorContainsNonAlphanumericCharacters),aCodingSchemeDesignator);
+											}
+											else {
+												log << WMsgDC(PrivateCodingSchemeDesignatorContainsNonAlphanumericCharacters);
+											}
+											log << " - value is <" << vCodingSchemeDesignator
+												<< "> - bad character is '" << c
+												<< "'" << endl;
+											success=false;
 										}
 									}
 								}
@@ -1836,7 +1934,7 @@ checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verb
 			}
 		}
 		{
-			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCodeValuesDoNotContainInappropriateCharacters)) {
+			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCodeValuesDoNotContainInappropriateCharacters)) {
 				success=false;
 			}
 		}
@@ -1847,7 +1945,7 @@ checkCodeValuesDoNotContainInappropriateCharacters(AttributeList &list,bool verb
 
 
 static bool
-checkLongCodeValuesAreLongEnough(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkLongCodeValuesAreLongEnough(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 	//cerr << "checkLongCodeValuesAreLongEnough():" << endl;
 	bool success=true;
 	AttributeListIterator listi(list);
@@ -1902,7 +2000,7 @@ checkLongCodeValuesAreLongEnough(AttributeList &list,bool verbose,bool newformat
 			}
 		}
 		{
-			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkLongCodeValuesAreLongEnough)) {
+			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkLongCodeValuesAreLongEnough)) {
 				success=false;
 			}
 		}
@@ -1913,7 +2011,7 @@ checkLongCodeValuesAreLongEnough(AttributeList &list,bool verbose,bool newformat
 
 
 static bool
-checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //cerr << "checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes():" << endl;
 	bool success=true;
 	AttributeListIterator listi(list);
@@ -1965,7 +2063,7 @@ checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(AttributeLis
 			}
 		}
 		else {
-			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes)) {
+			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes)) {
 				success=false;
 			}
 		}
@@ -1975,7 +2073,7 @@ checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(AttributeLis
 }
 
 static bool
-checkCodingSchemeDesignatorForMeasurementUnits(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkCodingSchemeDesignatorForMeasurementUnits(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //cerr << "checkCodingSchemeDesignatorForMeasurementUnits():" << endl;
 	bool success=true;
 	AttributeListIterator listi(list);
@@ -2041,7 +2139,7 @@ checkCodingSchemeDesignatorForMeasurementUnits(AttributeList &list,bool verbose,
 					delete [] al;
 				}
 			}
-			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCodingSchemeDesignatorForMeasurementUnits)) {
+			if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCodingSchemeDesignatorForMeasurementUnits)) {
 				success=false;
 			}
 		}
@@ -2663,7 +2761,7 @@ checkAnnotationGroupSequenceItemIsInternallyConsistent(AttributeList &list,bool 
 }
 
 static bool
-checkCoordinateContentItemsHaveAppropriateChildren(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkCoordinateContentItemsHaveAppropriateChildren(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //cerr << "checkCoordinateContentItemsHaveAppropriateChildren():" << endl;
 	bool success=true;
 	{
@@ -2756,7 +2854,7 @@ checkCoordinateContentItemsHaveAppropriateChildren(AttributeList &list,bool verb
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCoordinateContentItemsHaveAppropriateChildren)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCoordinateContentItemsHaveAppropriateChildren)) {
 			success=false;
 		}
 		++listi;
@@ -2765,7 +2863,7 @@ checkCoordinateContentItemsHaveAppropriateChildren(AttributeList &list,bool verb
 }
 
 static bool
-checkCoordinatesInCoordinateContentItems(AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkCoordinatesInCoordinateContentItems(AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //cerr << "checkCoordinatesInCoordinateContentItems():" << endl;
 	bool success=true;
 	{
@@ -2831,7 +2929,7 @@ checkCoordinatesInCoordinateContentItems(AttributeList &list,bool verbose,bool n
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,log,&::checkCoordinatesInCoordinateContentItems)) {
+		if (!::loopOverListsInSequencesWithLog(a,verbose,newformat,allpffgitems,log,&::checkCoordinatesInCoordinateContentItems)) {
 			success=false;
 		}
 		++listi;
@@ -2967,7 +3065,7 @@ findInstanceInHierarchicalEvidenceSequences(AttributeList &list,Attribute *aSOPI
 }
 
 static bool
-checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences(AttributeList &rootlist,AttributeList &list,bool verbose,bool newformat,TextOutputStream &log) {
+checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences(AttributeList &rootlist,AttributeList &list,bool verbose,bool newformat,bool allpffgitems,TextOutputStream &log) {
 //cerr << "checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences():" << endl;
 	bool success=true;
 
@@ -3077,7 +3175,7 @@ checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences(AttributeList 
 	while (!listi) {
 		Attribute *a=listi();
 		Assert(a);
-		if (!::loopOverListsInSequencesWithRootListAndLog(rootlist,a,verbose,newformat,log,&::checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences)) {
+		if (!::loopOverListsInSequencesWithRootListAndLog(rootlist,a,verbose,newformat,allpffgitems,log,&::checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences)) {
 			success=false;
 		}
 		++listi;
@@ -3676,6 +3774,7 @@ main(int argc, char *argv[])
 	bool newformat=options.get("newformat") || options.get("new");
 	bool dump=options.get("dump");
 	bool showfilename=options.get("filename");
+	bool allpffgitems=options.get("allpffgitems");
 	
 	const char *profile = NULL;
 	(void)(options.get("profile",profile));
@@ -3703,6 +3802,7 @@ main(int argc, char *argv[])
 			<< " [-describe]"
 			<< " [-dump]"
 			<< " [-filename]"
+			<< " [-allpffgitems]"
 			<< " [-v|-verbose]"
 			<< " [" << MMsgDC(InputFile) << "]"
 			<< " <" << MMsgDC(InputFile)
@@ -3743,11 +3843,11 @@ main(int argc, char *argv[])
 	
 	if (!checkWaveformSequenceIsInternallyConsistent(list,verbose,newformat,log)) success = false;
 	
-	if (!checkNoIllegalOddNumberedGroups(list,verbose,newformat,log)) success = false;
+	if (!checkNoIllegalOddNumberedGroups(list,verbose,newformat,allpffgitems,log)) success = false;
 	
 	if (!checkLUTDataValuesMatchSpecifiedRange(list,verbose,newformat,log)) success = false;
 	
-	if (!checkNoEmptyReferencedFileIDComponents(list,verbose,newformat,log)) success = false;
+	if (!checkNoEmptyReferencedFileIDComponents(list,verbose,newformat,allpffgitems,log)) success = false;
 	
 	if (!checkFrameIncrementPointerValuesValid(list,verbose,newformat,log)) success = false;
 	
@@ -3759,33 +3859,33 @@ main(int argc, char *argv[])
 	
 	if (!checkPixelSpacingCalibration(list,verbose,newformat,log)) success = false;
 	
-	if (!checkOrientationsAreUnitVectors(list,verbose,newformat,log)) success = false;
+	if (!checkOrientationsAreUnitVectors(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkOrientationsAreOrthogonal(list,verbose,newformat,log)) success = false;
+	if (!checkOrientationsAreOrthogonal(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkPatientOrientationValuesForBipedOrQuadruped(list,verbose,newformat,log)) success = false;
+	if (!checkPatientOrientationValuesForBipedOrQuadruped(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkScaledNumericValues(list,verbose,newformat,log)) success = false;
+	if (!checkScaledNumericValues(list,verbose,newformat,allpffgitems,log)) success = false;
 	
 	if (!checkSpacingBetweenSlicesIsNotNegative(list,verbose,newformat,log)) success = false;
 	
-	if (!checkUIDs(list,verbose,newformat,log)) success = false;
+	if (!checkUIDs(list,verbose,newformat,allpffgitems,log)) success = false;
 
 	if (!checkPresentationStateDisplayedAreaSelectionValuesAreValid(list,verbose,newformat,log)) success = false;
 	
-	if (!checkCodeValuesDoNotContainInappropriateCharacters(list,verbose,newformat,log)) success = false;
+	if (!checkCodeValuesDoNotContainInappropriateCharacters(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkLongCodeValuesAreLongEnough(list,verbose,newformat,log)) success = false;
+	if (!checkLongCodeValuesAreLongEnough(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(list,verbose,newformat,log)) success = false;
+	if (!checkCodeMeaningsForMeasurementUnitsDoNotContainInappropriateQuotes(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkCodingSchemeDesignatorForMeasurementUnits(list,verbose,newformat,log)) success = false;
+	if (!checkCodingSchemeDesignatorForMeasurementUnits(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkCoordinateContentItemsHaveAppropriateChildren(list,verbose,newformat,log)) success = false;
+	if (!checkCoordinateContentItemsHaveAppropriateChildren(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkCoordinatesInCoordinateContentItems(list,verbose,newformat,log)) success = false;
+	if (!checkCoordinatesInCoordinateContentItems(list,verbose,newformat,allpffgitems,log)) success = false;
 	
-	if (!checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences(list,list,verbose,newformat,log)) success = false;
+	if (!checkInstanceReferencesAreIncludedInHierarchicalEvidenceSequences(list,list,verbose,newformat,allpffgitems,log)) success = false;
 	
 	if (!checkPerFrameFunctionalGroupsSequencesAreNotAlreadyPresentInSharedFunctionalGroup(list,verbose,newformat,log)) success = false;
 	
@@ -3807,15 +3907,15 @@ main(int argc, char *argv[])
 	
 	if (!checkUIDsAreNotReusedForDifferentEntities(list,verbose,newformat,log)) success = false;
 	
-	if (!checkCodeSequenceItemsAreNotUnknown(list,verbose,newformat,log)) success = false;	// (000589)
+	if (!checkCodeSequenceItemsAreNotUnknown(list,verbose,newformat,allpffgitems,log)) success = false;	// (000589)
 
-	if (!list.validatePrivate(verbose,newformat,log)) success = false;
+	if (!list.validatePrivate(verbose,newformat,allpffgitems,log)) success = false;
 	
 	checkValuesNeededToBuildDicomDirectoryArePresentAndNotEmpty(list,verbose,newformat,log);	// always only warnings ... do not affect success
 	
 	if (verbose) log << "success after manual checks " << (success ? "success" : "failure") << endl;
 
-	if (!list.validateVR(verbose,newformat,log)) {
+	if (!list.validateVR(verbose,newformat,allpffgitems,log)) {
 		if (!newformat) {
 			log << EMsgDC(DataSetContainsInvalidValuesForVR)
 				<< endl;
@@ -3824,7 +3924,7 @@ main(int argc, char *argv[])
 	}
 	if (verbose) log << "success after validateVR " << (success ? "success" : "failure") << endl;
 
-	if (!list.validateRetired(verbose,newformat,log)) {
+	if (!list.validateRetired(verbose,newformat,allpffgitems,log)) {
 		if (!newformat) {
 			log << WMsgDC(DataSetContainsRetiredAttributes)
 				<< endl;
@@ -3840,7 +3940,7 @@ main(int argc, char *argv[])
 		    << MMsgDC(Retired)
 		    << endl;
 		}
-		if (!iod->verify(&list,verbose,newformat,log,list.getDictionary())) success=false;
+		if (!iod->verify(&list,verbose,newformat,allpffgitems,log,list.getDictionary())) success=false;
 		if (describe || verbose) iod->write(log,&list,list.getDictionary());
 	}
 	else {
@@ -3852,7 +3952,7 @@ main(int argc, char *argv[])
 	}
 	if (verbose) log << "success after iod verify " << (success ? "success" : "failure") << endl;
 
-	if (iod && !list.validateUsed(verbose,newformat,log)) {
+	if (iod && !list.validateUsed(verbose,newformat,allpffgitems,log)) {
 		if (!newformat) {
 			log << WMsgDC(DataSetContainsAttributesNotUsedInIOD)
 				<< endl;
