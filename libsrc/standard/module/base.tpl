@@ -215,6 +215,16 @@ DefineMacro="PrimaryAnatomicStructureMacro" InformationEntity="Frame"
 	SequenceEnd
 MacroEnd
 
+# this is not in the standard ... we use it in the WG26SP2025WSI module for the WG26SP2025 profile (000635)
+DefineMacro="PrimaryAnatomicStructureMandatoryMacro" InformationEntity="Frame"
+	Sequence="PrimaryAnatomicStructureSequence"				Type="1"	VM="1-n"
+		InvokeMacro="CodeSequenceMacro"
+		Sequence="PrimaryAnatomicStructureModifierSequence"	Type="3"	VM="1-n"
+			InvokeMacro="CodeSequenceMacro"	BaselineContextID="2"
+		SequenceEnd
+	SequenceEnd
+MacroEnd
+
 DefineMacro="GeneralAnatomyMandatoryMacro" InformationEntity="Frame"
 	Sequence="AnatomicRegionSequence"						Type="1"	VM="1"
 		InvokeMacro="CodeSequenceMacro"

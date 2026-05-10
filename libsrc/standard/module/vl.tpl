@@ -710,7 +710,7 @@ Module="WG26SP2025WSI"
 				InvokeMacro="ContentItemMacro"
 			SequenceEnd
 		SequenceEnd
-		InvokeMacro="PrimaryAnatomicStructureMacro" 
+		InvokeMacro="PrimaryAnatomicStructureMandatoryMacro" 
 	SequenceEnd
 ModuleEnd
 

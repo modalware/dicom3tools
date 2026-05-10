@@ -1,3 +1,5 @@
+260228:	libsrc/standard/module/base.tpl,vl.tpl: Detect missing PrimaryAnatomicStructureSequence in WG26SP2025 profile (000635)
+
 260228:	Imakefile,dcfile/Imakefile,appsrc/dcfile/dccsdump.cc,dccsdump.man,dccidump.man,dcdump.man: Add utility to dump code sequence items (000634)
 
 260228:	appsrc/dcfile/dccidump.cc,dcsrdump.cc: Show Long Code Value or URN Code Value used when Code Value not present (000633)
