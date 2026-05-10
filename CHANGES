@@ -1,4 +1,6 @@
-250524:	appsrc/dcfile/dciodvfy.cc,dciodvfy.man,libsrc/include/dctool/attrmxls.h,libsrc/src/dctool/attrmxls.cc: Check only first item of Per-Frame Functional Groups Sequence by default, without specific command line option to do them all (000621)
+250525:	appsrc/dcfile/dciodvfy.cc,dciodvfy.man,libsrc/src/dctool/attrmxls.cc,libsrc/support/module.awk: Check only first item of Referenced Image Navigation Sequence by default (000623)
+
+250524:	appsrc/dcfile/dciodvfy.cc,dciodvfy.man,libsrc/include/dctool/attrmxls.h,iodcomp.h,module.h,libsrc/src/dctool/attrmxls.cc,libsrc/support/iodcomp.awk,module.awk: Check only first item of Per-Frame Functional Groups Sequence by default, without specific command line option to do them all (000621)
 
 250523:	libsrc/standard/strval/base.tpl: Add 99Visiopharm coding scheme
 

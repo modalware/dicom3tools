@@ -143,7 +143,7 @@ loopOverListsInSequencesWithLog(Attribute *a,bool verbose,bool newformat,bool al
 		AttributeList **al;
 		int n;
 		if ((n=a->getLists(&al)) > 0) {
-			if (tag == TagFromName(PerFrameFunctionalGroupsSequence) && !allpffgitems) {
+			if ((tag == TagFromName(PerFrameFunctionalGroupsSequence) || tag == TagFromName(ReferencedImageNavigationSequence)) && !allpffgitems) {
 				// just do first item
 				if (!(*func)(*al[0],verbose,newformat,allpffgitems,log)) succeeded=false;
 			}
@@ -169,7 +169,7 @@ loopOverListsInSequencesWithRootListAndLog(AttributeList &rootlist,Attribute *a,
 		AttributeList **al;
 		int n;
 		if ((n=a->getLists(&al)) > 0) {
-			if (tag == TagFromName(PerFrameFunctionalGroupsSequence) && !allpffgitems) {
+			if ((tag == TagFromName(PerFrameFunctionalGroupsSequence) || tag == TagFromName(ReferencedImageNavigationSequence)) && !allpffgitems) {
 				// just do first item
 				if (!(*func)(rootlist,*al[0],verbose,newformat,allpffgitems,log)) succeeded=false;
 			}

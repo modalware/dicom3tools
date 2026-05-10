@@ -2772,6 +2772,6 @@
 
 (0077,0001) VERS="AGFA" VR="LO"   VM="1"		Owner="agfa/FixupStudyInstanceUid"			Keyword="?"					Name="?"
 
-(3021,0001) VERS="GOO" VR="LT"   VM="1"		Owner="<GOOGLE>"			Keyword="?"					Name="?"
-(3021,0003) VERS="GOO" VR="LT"   VM="1"		Owner="<GOOGLE>"			Keyword="?"					Name="?"
-(3021,0004) VERS="GOO" VR="LT"   VM="1"		Owner="<GOOGLE>"			Keyword="?"					Name="?"
+(3021,0001) VERS="GOO" VR="LT"   VM="1"		Owner="GOOGLE"			Keyword="?"					Name="?"
+(3021,0003) VERS="GOO" VR="LT"   VM="1"		Owner="GOOGLE"			Keyword="?"					Name="?"
+(3021,0004) VERS="GOO" VR="LT"   VM="1"		Owner="GOOGLE"			Keyword="?"					Name="?"
