@@ -91,6 +91,14 @@ Condition="EncapsulatedSTLInstance"
 	Element="SOPClassUID"		StringConstantFromRootAttribute="EncapsulatedSTLStorageSOPClassUID"
 ConditionEnd
 
+Condition="EncapsulatedOBJInstance"
+	Element="SOPClassUID"		StringConstantFromRootAttribute="EncapsulatedOBJStorageSOPClassUID"
+ConditionEnd
+
+Condition="EncapsulatedMTLInstance"
+	Element="SOPClassUID"		StringConstantFromRootAttribute="EncapsulatedMTLStorageSOPClassUID"
+ConditionEnd
+
 Condition="OphthalmicPhotography8BitImageInstance"
 	Element="SOPClassUID"		StringConstantFromRootAttribute="OphthalmicPhotography8BitImageStorageSOPClassUID"
 ConditionEnd

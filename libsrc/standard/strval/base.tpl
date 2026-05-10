@@ -694,6 +694,7 @@ StringValues="Modality"	{
 	SR = SR Document,
 	SRF = Subjective Refraction,
 	STAIN = Automated Slide Stainer,
+	TEXTUREMAP = Texture Map,
 	TG = Thermography,
 	US = Ultrasound,
 	VA = Visual Acuity,
@@ -1253,6 +1254,22 @@ StringValues="MIMETypeApplicationSTL"	{
 	model/STL,
 	Model/STL,
 	MODEL/STL
+}
+
+# should really have a case insensitive match :(
+StringValues="MIMETypeApplicationOBJ"	{
+	model/obj,
+	model/OBJ,
+	Model/OBJ,
+	MODEL/OBJ
+}
+
+# should really have a case insensitive match :(
+StringValues="MIMETypeApplicationMTL"	{
+	model/mtl,
+	model/MTL,
+	Model/MTL,
+	MODEL/MTL
 }
 
 StringValues="LossyImageCompressionMethod" {
