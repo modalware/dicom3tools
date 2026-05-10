@@ -1,3 +1,11 @@
+250715:	appsrc/dcfile/dciodvfy.cc: Check consistency of ImagedVolumeWidth,Height with TotalPixelMatrixColumns,Rows and PixelSpacing (000626)
+
+250713:	libsrc/standard/elmdict/other.tpl: Add PixelMed original file message digest private data elements
+
+250709:	libsrc/standard/module/rt.tpl: Relax Type 1 RT Structure Set requirements (CP 2445)
+
+250709:	libsrc/standard/elmdict/base.tpl: Add data element for Add RT specific plan approvals (CP 2427)
+
 250605:	libsrc/standard/transyn.tpl,strval/base.tpl: Add HTJ2K Transfer Syntaxes and string values (Sup 235)
 
 250605:	libsrc/standard/transyn.tpl,strval/base.tpl: Add JPEG-XL Transfer Syntaxes and string values (Sup 232)

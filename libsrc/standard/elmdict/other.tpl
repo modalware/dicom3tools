@@ -1689,6 +1689,8 @@
 
 (0009,0001) VERS="PMP" VR="UT"   VM="1"		Owner="PixelMed Publishing"							Keyword="OriginalFileName"				Name="Original File Name"
 (0009,0002) VERS="PMP" VR="US"   VM="1"		Owner="PixelMed Publishing"							Keyword="OriginalTIFFIFDIndex"			Name="Original TIFF IFD Index"
+(0009,0003) VERS="PMP" VR="UC"   VM="1"		Owner="PixelMed Publishing"							Keyword="OriginalFileMACString"			Name="Original File MAC String"
+(0009,0004) VERS="PMP" VR="CS"   VM="1"		Owner="PixelMed Publishing"							Keyword="OriginalFileMACAlgorithm"		Name="Original File MAC Algorithm"
 
 (0011,0002) VERS="PMP" VR="UC"   VM="1"		Owner="PixelMed Publishing"							Keyword="StrainDescription"					Name="Strain Description"
 (0011,0003) VERS="PMP" VR="LO"   VM="1"		Owner="PixelMed Publishing"							Keyword="StrainNomenclature"				Name="Strain Nomenclature"
