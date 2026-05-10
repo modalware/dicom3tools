@@ -1,3 +1,5 @@
+251221:	libsrc/standard/condn.tpl: Check for SCT human species as well as SRT (000630)
+
 251020: appsrc/dcfile/dciodvfy.cc,libsrc/src/locale/mesgtext.tpl: Warn when DimensionIndexPointer Attribute not present in any Shared or Per-Frame Functional Group (000629)
 
 251020: libsrc/standard/condn.tpl,module/base.tpl: Check DimensionOrganizationType is absent as alternative to not TILED_FULL for DimensionIndexSequence condition (CP 1822)

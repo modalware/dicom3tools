@@ -5308,11 +5308,19 @@ ConditionEnd
 
 Condition="IsHuman"
 	(
-		Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 		(
-			Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
-			Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
-		) Operator="And"
+			Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
+			(
+				Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
+				Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
+			) Operator="And"
+		)
+		(
+			Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SCT"
+			(
+				Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="337915000"	# homo sapiens
+			) Operator="And"
+		) Operator="Or"
 	)
 	(
 		Element="PatientSpeciesDescription"								Modifier="Not" ElementPresent=""
@@ -5330,11 +5338,19 @@ ConditionEnd
 
 Condition="IsAnimal"
 	(
-		Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 		(
-			Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
-			Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
-		) Operator="And"
+			Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
+			(
+				Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
+				Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
+			) Operator="And"
+		)
+		(
+			Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SCT"
+			(
+				Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="337915000"	# homo sapiens
+			) Operator="And"
+		) Operator="Or"
 	) Modifier="Not"
 	(
 		Element="PatientSpeciesDescription"								ElementPresent=""
@@ -5354,23 +5370,32 @@ Condition="IsAnimalAndPatientSpeciesCodeSequenceAbsent"
 	Element="PatientSpeciesCodeSequence"				Modifier="Not" ElementPresent=""
 	(
 		(
-			Element="CodingSchemeDesignator"							ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 				(
-					Element="CodeValue"									ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
-					Element="CodeValue"					Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
-				) Modifier="Not"
-			) Operator="And"
-		) Operator="Or"
-		Element="PatientSpeciesDescription"								ElementPresent=""
-		Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
-		Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
-		Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
-		Element="StrainDescription"						Operator="Or"	ElementPresent=""
-		Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
-		Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
-		Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
-		Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
+					Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
+				) Operator="And"
+			)
+			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SCT"
+				(
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="337915000"	# homo sapiens
+				) Operator="And"
+			) Operator="Or"
+		) Modifier="Not"
+		(
+			Element="PatientSpeciesDescription"								ElementPresent=""
+			Element="PatientSpeciesCodeSequence"			Operator="Or"	ElementPresent=""
+			Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
+			Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
+			Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
+			Element="StrainDescription"						Operator="Or"	ElementPresent=""
+			Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
+			Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
+			Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
+			Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+		) Operator="And"
 	) Operator="And"
 ConditionEnd
 
@@ -5378,23 +5403,32 @@ Condition="IsAnimalAndPatientSpeciesDescriptionAbsent"
 	Element="PatientSpeciesDescription"					Modifier="Not" ElementPresent=""
 	(
 		(
-			Element="CodingSchemeDesignator"							ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 				(
-					Element="CodeValue"									ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
-					Element="CodeValue"					Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
-				) Modifier="Not"
-			) Operator="And"
-		) Operator="Or"
-		Element="PatientSpeciesCodeSequence"							ElementPresent=""
-		Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
-		Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
-		Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
-		Element="StrainDescription"						Operator="Or"	ElementPresent=""
-		Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
-		Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
-		Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
-		Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
+					Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
+				) Operator="And"
+			)
+			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SCT"
+				(
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="337915000"	# homo sapiens
+				) Operator="And"
+			) Operator="Or"
+		) Modifier="Not"
+		(
+			Element="PatientSpeciesDescription"								ElementPresent=""
+			Element="PatientSpeciesCodeSequence"			Operator="Or"	ElementPresent=""
+			Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
+			Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
+			Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
+			Element="StrainDescription"						Operator="Or"	ElementPresent=""
+			Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
+			Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
+			Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
+			Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+		) Operator="And"
 	) Operator="And"
 ConditionEnd
 
@@ -5402,24 +5436,32 @@ Condition="IsAnimalAndPatientBreedCodeSequenceEmpty"
 	Element="PatientBreedCodeSequence"					Modifier="Not" SequenceHasItems=""
 	(
 		(
-			Element="CodingSchemeDesignator"							ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SRT"
 				(
-					Element="CodeValue"									ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
-					Element="CodeValue"					Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
-				) Modifier="Not"
-			) Operator="And"
-		) Operator="Or"
-		Element="PatientSpeciesDescription"								ElementPresent=""
-		Element="PatientSpeciesCodeSequence"			Operator="Or"	ElementPresent=""
-		Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
-		Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
-		Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
-		Element="StrainDescription"						Operator="Or"	ElementPresent=""
-		Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
-		Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
-		Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
-		Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85B00"	# homo sapiens retired
+					Element="CodeValue"							Operator="Or"	ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="L-85003"	# homo sapiens
+				) Operator="And"
+			)
+			(
+				Element="CodingSchemeDesignator"								ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="SCT"
+				(
+					Element="CodeValue"											ElementPresentWithin="PatientSpeciesCodeSequence"	StringValue="337915000"	# homo sapiens
+				) Operator="And"
+			) Operator="Or"
+		) Modifier="Not"
+		(
+			Element="PatientSpeciesDescription"								ElementPresent=""
+			Element="PatientSpeciesCodeSequence"			Operator="Or"	ElementPresent=""
+			Element="PatientBreedDescription"				Operator="Or"	ElementPresent=""
+			Element="PatientBreedCodeSequence"				Operator="Or"	ElementPresent=""
+			Element="BreedRegistrationSequence"				Operator="Or"	ElementPresent=""
+			Element="StrainDescription"						Operator="Or"	ElementPresent=""
+			Element="StrainNomenclature"					Operator="Or"	ElementPresent=""
+			Element="StrainCodeSequence"					Operator="Or"	ElementPresent=""
+			Element="StrainAdditionalInformation"			Operator="Or"	ElementPresent=""
+			Element="StrainStockSequence"					Operator="Or"	ElementPresent=""
+		) Operator="And"
 	) Operator="And"
 ConditionEnd
 
