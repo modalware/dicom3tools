@@ -1,3 +1,7 @@
+250817: libsrc/standard/condn.tpl: Do not report missing PlanePositionSequence and PlaneOrientationSequence for WSI Parametric Map (000628)
+
+250817: libsrc/standard/strval/base.tpl,ct.tpl,mr.tpl: Update Pixel Contrast Image/Frame Type Value 4 to use QUANTITY, expecting details to be in RWVM Quantity Definition Sequence (CP 1700)
+
 250723:	appsrc/dcfile/dcinfo.cc,.man,Imakefile: Add utility to describe characteristics of images esp. re. multi-frame, enhanced, encapsulated and presence or absence of offset tables (000627)
 
 250715:	appsrc/dcfile/dciodvfy.cc: Check consistency of ImagedVolumeWidth,Height with TotalPixelMatrixColumns,Rows and PixelSpacing (000626)

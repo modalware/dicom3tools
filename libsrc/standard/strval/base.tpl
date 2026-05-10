@@ -1373,17 +1373,12 @@ StringValues="CommonEnhancedImageType4" {
 	MAXIMUM,
 	MEAN,
 	MINIMUM,
-	MTT,
 	MULTIPLICATION,
-	RCBF,
-	RCBV,
 	RESAMPLED,
 	STD_DEVIATION,
 	SUBTRACTION,
-	T_TEST,
-	TTP,
-	Z_SCORE,
 	NONE,
+	QUANTITY,
 	MIXED
 }
 
@@ -1394,17 +1389,12 @@ StringValues="CommonEnhancedFrameType4" {
 	MAXIMUM,
 	MEAN,
 	MINIMUM,
-	MTT,
 	MULTIPLICATION,
-	RCBF,
-	RCBV,
 	RESAMPLED,
 	STD_DEVIATION,
 	SUBTRACTION,
-	T_TEST,
-	TTP,
-	Z_SCORE,
-	NONE
+	NONE,
+	QUANTITY
 }
 
 StringValues="RespiratoryPhase" {
